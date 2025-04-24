@@ -20,3 +20,7 @@ body {
   flex-direction: column;
   gap: 15px;
 }
+
+.startButton {
+  cursor: pointer;
+}
