@@ -47,6 +47,22 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const getButton = document.querySelector("#start");
   getButton.addEventListener("click", () => {
+    const BREAK_TIME_INPUT = document.querySelector("#workTimeBreak");
+    let breakTimeValue = Number(BREAK_TIME_INPUT.value);
+    const WORK_TIME = document.querySelector("#workTime");
+    let workTimeValue = Number(WORK_TIME.value);
+    chrome.runtime.sendMessage({
+        action: "setWorkTime",
+        workTime: workTimeValue
+
+    })        
+    console.log("Valeur envoyée au background script:", workTimeValue);
+    chrome.runtime.sendMessage({
+        action: "setBreakTime",
+        breakTime: breakTimeValue
+
+    })
+    console.log("Valeur envoyée au background script:", breakTimeValue);
     window.close();
   });
 });
