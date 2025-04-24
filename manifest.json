@@ -11,11 +11,5 @@
         "32": "Images/LogoTakeABreak32x32.png",
         "48": "Images/LogoTakeABreak48x48.png",
         "128": "Images/LogoTakeABreak128x128.png"
-    },
-    "content_scripts": [
-      {
-        "js": ["scripts/content.js"],
-        "matches": ["<all_urls>"]
-      }
-    ]
+    }
   }
