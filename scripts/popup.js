@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const WORK_TIME = document.querySelector("#workTime");
     MINUS_WORK_BUTTON.addEventListener("click", () => {
         let workTime = Number(WORK_TIME.value);
+        if (workTime > 1){
         workTime -= 1;
         WORK_TIME.value = workTime;
+        }
     })
 })
 
@@ -17,9 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
         let workTime = Number(WORK_TIME.value);
         workTime += 1;
         WORK_TIME.value = workTime;
-    })
+        }
+    )
 })
 
+//close the pop up when start button is clicked
 document.addEventListener("DOMContentLoaded", function () {
   const getButton = document.querySelector("#start");
   getButton.addEventListener("click", () => {
