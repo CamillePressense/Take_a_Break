@@ -36,3 +36,9 @@
 #blue {
   background-color: #bae1ff;
 }
+
+.breakLogo{
+    display: none;
+    height: 128px;
+    width: 128px;
+}

@@ -1,3 +1,4 @@
+//picking timer color
 const body = document.querySelector("body");
 const menuColor = document.querySelector("#colorChoice");
 const showColor = document.querySelectorAll(".color");
@@ -42,3 +43,22 @@ blueColor.addEventListener("click", () => {
   body.style.backgroundColor = "#bae1ff";
   showElement();
 });
+
+//getting working time, displaying timer and breaklogo at this end
+document.addEventListener('DOMContentLoaded', function(){
+    const TIMER = document.querySelector("#timer")
+    const BREAK_LOGO = document.querySelector("#breakLogo");
+    chrome.storage.local.get("workTime", function(data) {
+        if (data.workTime) {
+            let workTime = data.workTime;
+            console.log("Valeur recuperee du local storage:", workTime);
+            TIMER.textContent = workTime
+            setInterval(() => {
+                TIMER.textContent = workTime
+                workTime <= 0 ? (BREAK_LOGO.style.display = "block") : workTime--;
+            }, 60000);
+        }
+    })
+})
+
+

@@ -45,21 +45,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 function startTimer(duration) {
-  // Votre logique de minuteur ici
+  
   console.log(`Démarrage du minuteur pour ${duration} minutes`);
-  // ...
-}
 
-// Dans background.js
-/*chrome.runtime.onMessage.addListener(function(message) {
-    if (message.action === "showCustomNotification") {
-        chrome.windows.create({
-            url: 'window.html',
-            type: 'popup',
-            width: 300,
-            height: 150,
-            left: Math.round(screen.width - 320),
-            top: Math.round(screen.height - 170)
-        });
-    }
-});*/
+}
