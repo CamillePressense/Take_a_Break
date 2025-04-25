@@ -1,0 +1,38 @@
+.colorChoice {
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.containerHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.color {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 1px solid black;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+#yellow {
+  background-color: #ffffba;
+}
+
+#orange {
+  background-color: #ffdfba;
+}
+
+#red {
+  background-color: #ffb3ba;
+}
+
+#green {
+  background-color: #baffc9;
+}
+
+#blue {
+  background-color: #bae1ff;
+}
