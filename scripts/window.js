@@ -126,3 +126,28 @@ document.addEventListener("DOMContentLoaded", function () {
     } 
   });
 });
+
+
+//displaying options button when hover on the window
+document.addEventListener("mouseover", () => {
+  const PLAYPAUSE_BUTTON = document.querySelector("#playPause");
+
+  displayElement(menuColor)
+  displayElement(PLAYPAUSE_BUTTON)
+  
+  if (getPin.style.display === "none"){
+    pinDisabled.style.display = "block";
+  } else {
+    getPin.style.display = "none"
+  }
+})
+
+function displayElement(e){
+e.style.display =
+      element.style.display === "block" ? "none" : "block";
+}
+
+function hideElement(e){
+  e.style.display = 
+  element.style.display === "none" ? "block" : "none";
+}

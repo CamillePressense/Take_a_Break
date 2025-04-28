@@ -11,6 +11,7 @@
 .colorChoice {
   cursor: pointer;
   margin-bottom: 4px;
+  display: none;
 }
 
 .containerHeader {
@@ -91,6 +92,7 @@
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  display: none;
 }
 
 .playPause img {
