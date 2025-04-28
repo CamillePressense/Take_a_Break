@@ -37,8 +37,53 @@
   background-color: #bae1ff;
 }
 
+.containerTimer {
+  position: relative;
+}
+
+.timer {
+  font-size: 4rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .breakLogo{
-    display: none;
-    height: 128px;
-    width: 128px;
+  display: none;
+  height: 128px;
+  width: 128px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid black;
+  animation: clignoter 1s infinite;
+}
+
+@keyframes clignoter {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.playPause {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.playPause img {
+  width: 40px;
+  height: auto;
 }
