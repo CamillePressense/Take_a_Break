@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setInterval(() => {
         TIMER.textContent = workTime;
         workTime <= 0 ? (BREAK_LOGO.style.display = "block") : workTime--;
-      }, 60000);
+      }, 1000);
     }
   });
 });
