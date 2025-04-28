@@ -48,15 +48,39 @@ blueColor.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", function () {
   const TIMER = document.querySelector("#timer");
   const BREAK_LOGO = document.querySelector("#breakLogo");
+  const playPauseDiv = document.querySelector("#playPause");
+  const playPauseImg = playPauseDiv.querySelector("img");
+  let isPaused = false;
+  let intervalId = null;
+
   chrome.storage.local.get("workTime", function (data) {
     if (data.workTime) {
       let workTime = data.workTime;
       console.log("Valeur recuperee du local storage:", workTime);
       TIMER.textContent = workTime;
-      setInterval(() => {
-        TIMER.textContent = workTime;
-        workTime <= 0 ? (BREAK_LOGO.style.display = "block") : workTime--;
-      }, 60000);
-    }
+      
+      function startTimer() {
+        intervalId = setInterval(() => {
+          if (workTime <= 0) {
+            clearInterval(intervalId);
+            BREAK_LOGO.style.display = "block";
+          } else {
+            workTime--;
+            TIMER.textContent = workTime;
+          }
+        }, 6000);
+      }startTimer();
+
+      playPauseDiv.addEventListener("click", () => {
+        isPaused = !isPaused;
+        if (isPaused) {
+          playPauseImg.src = "Images/play.png";
+          clearInterval(intervalId);
+        } else {
+          playPauseImg.src = "Images/pause.png";
+          startTimer();
+        }
+      });
+    } 
   });
 });
