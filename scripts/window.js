@@ -9,6 +9,7 @@ const greenColor = document.querySelector("#green");
 const blueColor = document.querySelector("#blue");
 const getPin = document.querySelector("#isPined");
 const pinDisabled = document.querySelector("#pinDisabled");
+const PLAYPAUSE_BUTTON = document.querySelector("#playPause")
 
 let alwaysOnTopEnabled = true;
 getPin.addEventListener("click", () => {
@@ -85,7 +86,7 @@ blueColor.addEventListener("click", () => {
   showElement();
 });
 
-//getting working time, displaying timer and breaklogo at this end
+//getting working time, displaying timer and breaklogo at the end
 document.addEventListener("DOMContentLoaded", function () {
   const TIMER = document.querySelector("#timer");
   const BREAK_LOGO = document.querySelector("#breakLogo");
@@ -128,26 +129,21 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-//displaying options button when hover on the window
-document.addEventListener("mouseover", () => {
-  const PLAYPAUSE_BUTTON = document.querySelector("#playPause");
-
-  displayElement(menuColor)
-  displayElement(PLAYPAUSE_BUTTON)
-  
-  if (getPin.style.display === "none"){
-    pinDisabled.style.display = "block";
-  } else {
-    getPin.style.display = "none"
-  }
-})
-
+//displaying / hiding options button on hover
 function displayElement(e){
-e.style.display =
-      element.style.display === "block" ? "none" : "block";
+e.style.display = "block";
 }
 
 function hideElement(e){
-  e.style.display = 
-  element.style.display === "none" ? "block" : "none";
+  e.style.display = "none";
 }
+
+document.addEventListener("mouseover", () => {
+  displayElement(menuColor)
+  displayElement(PLAYPAUSE_BUTTON)
+})
+
+document.addEventListener("mouseout", () => {
+  hideElement(menuColor)
+  hideElement(PLAYPAUSE_BUTTON)
+})

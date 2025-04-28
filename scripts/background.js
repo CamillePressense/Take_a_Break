@@ -2,20 +2,7 @@ let popupWindowId = null;
 let alwaysOnTopInterval = null;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "setWorkTime") {
-    const workTime = message.workTime;
-    console.log("Valeur reçue du temps de travail :", workTime);
-    chrome.storage.local.set({ workTime: workTime }, () => {
-      sendResponse({ status: "success", message: "Timer started" });
-    });
-  } else if (message.action === "setBreakTime") {
-    const breakTime = message.breakTime;
-    console.log("Valeur reçue du temps de pause :", breakTime);
-    sendResponse({
-      status: "success",
-      message: "Valeur set break time récupérée",
-    });
-  } else if (message.action === "openWindow") {
+  if (message.action === "openWindow") {
     if (popupWindowId) {
       chrome.windows.update(popupWindowId, { focused: true }, (win) => {
         if (chrome.runtime.lastError) {
