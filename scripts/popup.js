@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         WORK_TIME.value = workTime;
         }
     })
-    
+
     PLUS_WORK_BUTTON.addEventListener("click", () => {
         let workTime = Number(WORK_TIME.value);
         workTime += 1;
@@ -47,23 +47,29 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const START_BUTTON = document.querySelector("#start");
     
-    START_BUTTON.addEventListener("click", () => {
+    const startTimer = () => {
         let workTimeValue = Number(WORK_TIME.value);
         let breakTimeValue = Number(BREAK_TIME_INPUT.value);
 
         chrome.runtime.sendMessage({
             action:"startTimer"
-        })
-            
+        })          
         chrome.storage.local.set({workTime: workTimeValue}, function() {
             console.log("Durée travail enregistrée dans le local storage");
         })
         chrome.storage.local.set({breakTime: breakTimeValue}, function() {
-            console.log("Durée break enregistrée dans le local storage")
+            console.log("Durée break enregistrée dans le local storage");
         })
         window.close();
-    })
+    }
+    
+    START_BUTTON.addEventListener("click", startTimer)
+    document.addEventListener("keydown", event =>{
+        if (event.key === "Enter")
+        startTimer()
+        });
 })
+
     
 
 
