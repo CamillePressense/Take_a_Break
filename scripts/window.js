@@ -7,6 +7,47 @@ const orangeColor = document.querySelector("#orange");
 const redColor = document.querySelector("#red");
 const greenColor = document.querySelector("#green");
 const blueColor = document.querySelector("#blue");
+const getPin = document.querySelector("#isPined");
+const pinDisabled = document.querySelector("#pinDisabled");
+
+let alwaysOnTopEnabled = true;
+getPin.addEventListener("click", () => {
+  alwaysOnTopEnabled = !alwaysOnTopEnabled;
+  chrome.runtime.sendMessage(
+    {
+      action: "toggleAlwaysOnTop",
+      enabled: alwaysOnTopEnabled,
+    },
+    (response) => {
+      if (response.status === "success") {
+        console.log("AlwaysOnTop toggled:", response.message);
+        pinDisabled.style.display = "block";
+        getPin.style.display = "none";
+      } else {
+        console.error("Erreur:", response.message);
+      }
+    }
+  );
+});
+
+pinDisabled.addEventListener("click", () => {
+  alwaysOnTopEnabled = true;
+  chrome.runtime.sendMessage(
+    {
+      action: "toggleAlwaysOnTop",
+      enabled: alwaysOnTopEnabled,
+    },
+    (response) => {
+      if (response.status === "success") {
+        console.log("AlwaysOnTop enabled:", response.message);
+        pinDisabled.style.display = "none";
+        getPin.style.display = "block";
+      } else {
+        console.error("Erreur:", response.message);
+      }
+    }
+  );
+});
 
 function showElement() {
   showColor.forEach((element) => {

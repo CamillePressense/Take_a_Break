@@ -16,5 +16,18 @@
     "service_worker": "scripts/background.js",
     "type": "module"
   },
-  "permissions": ["storage", "alarms", "windows"]
+  "permissions": ["storage", "alarms", "windows"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "window.html",
+        "scripts/window.js",
+        "styles/styleWindow.css",
+        "Images/cercleChromatique20x20.png",
+        "Images/LogoTakeABreak128x128.png",
+        "Images/pause.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

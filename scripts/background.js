@@ -1,51 +1,79 @@
-// Écouter les messages envoyés depuis le popup
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  // Vérifier le type de message reçu
+let popupWindowId = null;
+let alwaysOnTopInterval = null;
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "setWorkTime") {
-    // Récupérer la valeur
     const workTime = message.workTime;
-
     console.log("Valeur reçue du temps de travail :", workTime);
-
-    // Utilisez la valeur comme vous le souhaitez
-    // Par exemple, définir un minuteur
-    startTimer(workTime);
-
-    // Si vous souhaitez envoyer une réponse au popup
-    sendResponse({ status: "success", message: "Timer started" });
-  }
-
-  if (message.action === "setBreakTime") {
-    // Récupérer la valeur
+    chrome.storage.local.set({ workTime: workTime }, () => {
+      sendResponse({ status: "success", message: "Timer started" });
+    });
+  } else if (message.action === "setBreakTime") {
     const breakTime = message.breakTime;
-
     console.log("Valeur reçue du temps de pause :", breakTime);
-
-    // Utilisez la valeur comme vous le souhaitez
-    // Par exemple, définir un minuteur
-    startTimer(breakTime);
-
-    // Si vous souhaitez envoyer une réponse au popup
     sendResponse({
       status: "success",
-      message: "Valeur set break time récupére",
+      message: "Valeur set break time récupérée",
     });
+  } else if (message.action === "openWindow") {
+    if (popupWindowId) {
+      chrome.windows.update(popupWindowId, { focused: true }, (win) => {
+        if (chrome.runtime.lastError) {
+          createPopupWindow();
+        }
+        sendResponse({
+          status: "success",
+          message: "Window focused or opened",
+        });
+      });
+    } else {
+      createPopupWindow();
+      sendResponse({ status: "success", message: "Window opened" });
+    }
+  } else if (message.action === "toggleAlwaysOnTop") {
+    if (!message.enabled && alwaysOnTopInterval) {
+      clearInterval(alwaysOnTopInterval);
+      alwaysOnTopInterval = null;
+    } else if (message.enabled && !alwaysOnTopInterval && popupWindowId) {
+      alwaysOnTopInterval = setInterval(() => {
+        if (popupWindowId) {
+          chrome.windows.update(popupWindowId, { focused: true }, (win) => {
+            if (chrome.runtime.lastError) {
+              popupWindowId = null;
+              clearInterval(alwaysOnTopInterval);
+            }
+          });
+        }
+      }, 1000);
+    }
+    sendResponse({ status: "success", message: "AlwaysOnTop toggled" });
+  } else {
+    sendResponse({ status: "error", message: "Action inconnue" });
   }
-  chrome.windows.create({
-    url: "window.html",
-    type: "popup",
-    width: 300,
-    height: 300,
-    // left: Math.round(screen.width - 320),
-    //top: Math.round(screen.height - 170)
-  });
 
-  // Important: retournez true si vous utilisez sendResponse de manière asynchrone
   return true;
 });
 
-function startTimer(duration) {
-  
-  console.log(`Démarrage du minuteur pour ${duration} minutes`);
-
+function createPopupWindow() {
+  chrome.windows.create(
+    {
+      url: "window.html",
+      type: "popup",
+      width: 200,
+      height: 200,
+    },
+    (window) => {
+      popupWindowId = window.id;
+      alwaysOnTopInterval = setInterval(() => {
+        if (popupWindowId) {
+          chrome.windows.update(popupWindowId, { focused: true }, (win) => {
+            if (chrome.runtime.lastError) {
+              popupWindowId = null;
+              clearInterval(alwaysOnTopInterval);
+            }
+          });
+        }
+      }, 1000);
+    }
+  );
 }
