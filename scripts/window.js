@@ -68,8 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
             workTime--;
             TIMER.textContent = workTime;
           }
-        }, 6000);
-      }startTimer();
+        }, 1000);
+      }
+      startTimer();
 
       playPauseDiv.addEventListener("click", () => {
         isPaused = !isPaused;
