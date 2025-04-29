@@ -62,6 +62,17 @@
   align-items: center;
 }
 
+.circle{
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
 .timer {
   font-size: 4rem;
   position: fixed;
@@ -91,7 +102,7 @@
 
   50% {
     transform: scale(1.2);
-    opacity: 0.6;
+    opacity: 1;
   }
 
   100% {
