@@ -64,11 +64,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   START_BUTTON.addEventListener("click", openWindow);
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      console.log("Touche Entrée détectée!");
-      openWindow();
-    }
-  });
-});
+    document.addEventListener("keydown", event =>{
+        if (event.key === "Enter"){
+            event.preventDefault();
+            openWindow();
+        }
+    });
+})
+
+
+
+
+

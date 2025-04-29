@@ -95,42 +95,96 @@ document.addEventListener("DOMContentLoaded", function () {
   const PLAY_ICON = document.querySelector("#playIcon");
   let isPaused = false;
   let intervalId = null;
+  let timeOutId;
 
-  chrome.storage.local.get("workTime", function (data) {
-    if (data.workTime) {
-      let workTime = data.workTime;
-      console.log("Valeur récupérée du local storage:", workTime);
-      TIMER.textContent = workTime;
+  function displayBreakLogo(){
+    BREAK_LOGO.style.display = "block";
+    PAUSE_ICON.style.display = "none";
+    PLAY_ICON.style.display = "none";
+    TIMER.style.display = "none";
+    menuColor.style.display = "none"; //le hover prend le pas
+  };
+  
+  function displayTimer(){
+    BREAK_LOGO.style.display = "none";
+    PAUSE_ICON.style.display = "block";
+    PLAY_ICON.style.display = "block";
+    TIMER.style.display = "block";
+    menuColor.style.display = "block";
+  }
 
-      function startTimer() {
-        intervalId = setInterval(() => {
-          if (workTime <= 0) {
-            clearInterval(intervalId);
-            BREAK_LOGO.style.display = "block";
-            PLAY_PAUSE_BUTTON.style.display = "none";
-          } else {
-            workTime--;
-            TIMER.textContent = workTime;
-          }
-        }, 1000);
+// On récupère le temps de travail du local storage
+  async function getWorkTime() {
+    try {
+        const result = await chrome.storage.local.get("workTime");
+        const workTime = result.workTime;
+        console.log("Valeur recuperee work:", workTime);
+        return workTime;
+    } catch (error) {
+        console.error("Erreur lors de la récupération:", error);
+    }
+}
+
+
+//On récupère le temps de pause
+  async function getBreakTime() {
+    try {
+        const result = await chrome.storage.local.get("breakTime");
+        const breakTime = result.breakTime;
+        console.log("Valeur recuperee break:", breakTime);
+        return breakTime;
+    } catch (error) {
+        console.error("Erreur lors de la récupération:", error);
+    }
+  }
+
+  //Lancer le décompte du temps de travail
+  async function startTimer(timeWork) {
+  displayTimer();
+    intervalId = setInterval(() => {
+      if (timeWork >= 0) {
+        TIMER.textContent = timeWork;
+        timeWork--;
+      } else{
+        clearInterval(intervalId)
+        breakStart();
       }
-      startTimer();
+    }, 1000);
+  }
+    
+  //Lancer le temps de pause
+  async function breakStart(){
+    displayBreakLogo();
+    const breakTime = await getBreakTime();
+    timeOutId = setTimeout(timer, breakTime * 1000)
+  }
 
-      PLAY_PAUSE_BUTTON.addEventListener("click", () => {
-        isPaused = !isPaused;
-        if (isPaused) {
-          PLAY_ICON.style.display = "block";
-          PAUSE_ICON.style.display = "none";
-          clearInterval(intervalId);
-        } else {
-          PLAY_ICON.style.display = "none";
-          PAUSE_ICON.style.display = "block";
-          startTimer();
-        }
-      });
+  //Lancer le timer global
+  async function timer(){
+    if (timeOutId){
+      clearTimeout(timeOutId)
+    };
+    console.log("fonction timer");
+    const workTime = await getWorkTime();
+    await startTimer(workTime);
+  }
+  
+  timer();
+
+  PLAY_PAUSE_BUTTON.addEventListener("click", () => {
+    isPaused = !isPaused;
+    if (isPaused) {
+      PLAY_ICON.style.display = "block";
+      PAUSE_ICON.style.display = "none";
+      clearInterval(intervalId);
+    } else {
+      PLAY_ICON.style.display = "none";
+      PAUSE_ICON.style.display = "block";
+      startTimer();
     }
   });
 });
+  
 
 //displaying / hiding options button on hover
 function displayElement(e) {
