@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Valeur recuperee work:", workTime);
         return workTime;
     } catch (error) {
-        console.error("Erreur lors de la récupération:", error);
+        console.error("Erreur lors de la récupération du temps de travail:", error);
     }
 }
 
@@ -134,13 +134,13 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Valeur recuperee break:", breakTime);
         return breakTime;
     } catch (error) {
-        console.error("Erreur lors de la récupération:", error);
+        console.error("Erreur lors de la récupération du temps de pause:", error);
     }
   }
 
   //Lancer le décompte du temps de travail
   async function startTimer(timeWork) {
-  displayTimer();
+    displayTimer();
     intervalId = setInterval(() => {
       if (timeWork >= 0) {
         TIMER.textContent = timeWork;
@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
   //Lancer le temps de pause
   async function breakStart(){
+    TIMER.textContent = "";
     displayBreakLogo();
     const breakTime = await getBreakTime();
     timeOutId = setTimeout(timer, breakTime * 1000)
