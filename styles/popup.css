@@ -23,6 +23,11 @@ body {
 
 .startButton {
   cursor: pointer;
+  padding: 12px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  border-radius: 25px;
+  border: 1px solid rgb(71, 69, 69);
 }
 
 input::-webkit-inner-spin-button,
@@ -33,4 +38,16 @@ input::-webkit-outer-spin-button {
 
 input {
   width: 40px;
+}
+
+.timeContainer button {
+  border-radius: 50%;
+  border: 1px;
+  cursor: pointer;
+  margin: 3px;
+} 
+
+.timeContainer input {
+  border: 0;
+  border-bottom: 1px solid rgb(71, 69, 69);
 }

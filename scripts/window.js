@@ -97,78 +97,79 @@ document.addEventListener("DOMContentLoaded", function () {
   let intervalId = null;
   let timeOutId;
 
-  function displayBreakLogo(){
+  function displayBreakLogo() {
     BREAK_LOGO.style.display = "block";
     PAUSE_ICON.style.display = "none";
     PLAY_ICON.style.display = "none";
     TIMER.style.display = "none";
     menuColor.style.display = "none"; //le hover prend le pas
-  };
-  
-  function displayTimer(){
+  }
+
+  function displayTimer() {
     BREAK_LOGO.style.display = "none";
     PAUSE_ICON.style.display = "block";
-    PLAY_ICON.style.display = "block";
+    PLAY_ICON.style.display = "none";
     TIMER.style.display = "block";
     menuColor.style.display = "block";
   }
 
-// On récupère le temps de travail du local storage
+  // On récupère le temps de travail du local storage
   async function getWorkTime() {
     try {
-        const result = await chrome.storage.local.get("workTime");
-        const workTime = result.workTime;
-        console.log("Valeur recuperee work:", workTime);
-        return workTime;
+      const result = await chrome.storage.local.get("workTime");
+      const workTime = result.workTime;
+      console.log("Valeur recuperee work:", workTime);
+      return workTime;
     } catch (error) {
-        console.error("Erreur lors de la récupération:", error);
-    }
-}
-
-
-//On récupère le temps de pause
-  async function getBreakTime() {
-    try {
-        const result = await chrome.storage.local.get("breakTime");
-        const breakTime = result.breakTime;
-        console.log("Valeur recuperee break:", breakTime);
-        return breakTime;
-    } catch (error) {
-        console.error("Erreur lors de la récupération:", error);
+        console.error("Erreur lors de la récupération du temps de travail:", error);
     }
   }
 
+  //On récupère le temps de pause
+  async function getBreakTime() {
+    try {
+      const result = await chrome.storage.local.get("breakTime");
+      const breakTime = result.breakTime;
+      console.log("Valeur recuperee break:", breakTime);
+      return breakTime;
+    } catch (error) {
+        console.error("Erreur lors de la récupération du temps de pause:", error);
+    }
+  }
   //Lancer le décompte du temps de travail
+  let currentWorkTime;
   async function startTimer(timeWork) {
-  displayTimer();
+    currentWorkTime = timeWork;
+    displayTimer();
     intervalId = setInterval(() => {
-      if (timeWork >= 0) {
-        TIMER.textContent = timeWork;
-        timeWork--;
-      } else{
-        clearInterval(intervalId)
+      if (currentWorkTime >= 0 && !isPaused) {
+        TIMER.textContent = currentWorkTime;
+        currentWorkTime--;
+      } else if (currentWorkTime < 0) {
+        clearInterval(intervalId);
         breakStart();
       }
     }, 1000);
   }
-    
+
   //Lancer le temps de pause
   async function breakStart(){
+    TIMER.textContent = "";
     displayBreakLogo();
     const breakTime = await getBreakTime();
-    timeOutId = setTimeout(timer, breakTime * 1000)
+    timeOutId = setTimeout(timer, breakTime * 1000);
   }
 
   //Lancer le timer global
-  async function timer(){
-    if (timeOutId){
-      clearTimeout(timeOutId)
-    };
+  async function timer() {
+    if (timeOutId) {
+      clearTimeout(timeOutId);
+    }
     console.log("fonction timer");
     const workTime = await getWorkTime();
     await startTimer(workTime);
   }
-  
+
   timer();
 
   PLAY_PAUSE_BUTTON.addEventListener("click", () => {
@@ -180,11 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       PLAY_ICON.style.display = "none";
       PAUSE_ICON.style.display = "block";
-      startTimer();
+      startTimer(currentWorkTime);
     }
   });
 });
-  
 
 //displaying / hiding options button on hover
 function displayElement(e) {
