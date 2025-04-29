@@ -9,7 +9,7 @@ const greenColor = document.querySelector("#green");
 const blueColor = document.querySelector("#blue");
 const getPin = document.querySelector("#isPined");
 const pinDisabled = document.querySelector("#pinDisabled");
-const PLAYPAUSE_BUTTON = document.querySelector("#playPause")
+const playButton = document.querySelector("#play");
 
 let alwaysOnTopEnabled = true;
 getPin.addEventListener("click", () => {
@@ -86,26 +86,28 @@ blueColor.addEventListener("click", () => {
   showElement();
 });
 
+const PLAY_PAUSE_BUTTON = document.querySelector("#playPauseButton");
 //getting working time, displaying timer and breaklogo at the end
 document.addEventListener("DOMContentLoaded", function () {
   const TIMER = document.querySelector("#timer");
   const BREAK_LOGO = document.querySelector("#breakLogo");
-  const playPauseDiv = document.querySelector("#playPause");
-  const playPauseImg = playPauseDiv.querySelector("img");
+  const PAUSE_ICON = document.querySelector("#pauseIcon");
+  const PLAY_ICON = document.querySelector("#playIcon");
   let isPaused = false;
   let intervalId = null;
 
   chrome.storage.local.get("workTime", function (data) {
     if (data.workTime) {
       let workTime = data.workTime;
-      console.log("Valeur recuperee du local storage:", workTime);
+      console.log("Valeur récupérée du local storage:", workTime);
       TIMER.textContent = workTime;
-      
+
       function startTimer() {
         intervalId = setInterval(() => {
           if (workTime <= 0) {
             clearInterval(intervalId);
             BREAK_LOGO.style.display = "block";
+            PLAY_PAUSE_BUTTON.style.display = "none";
           } else {
             workTime--;
             TIMER.textContent = workTime;
@@ -114,36 +116,37 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       startTimer();
 
-      playPauseDiv.addEventListener("click", () => {
+      PLAY_PAUSE_BUTTON.addEventListener("click", () => {
         isPaused = !isPaused;
         if (isPaused) {
-          playPauseImg.src = "Images/play.png";
+          PLAY_ICON.style.display = "block";
+          PAUSE_ICON.style.display = "none";
           clearInterval(intervalId);
         } else {
-          playPauseImg.src = "Images/pause.png";
+          PLAY_ICON.style.display = "none";
+          PAUSE_ICON.style.display = "block";
           startTimer();
         }
       });
-    } 
+    }
   });
 });
 
-
 //displaying / hiding options button on hover
-function displayElement(e){
-e.style.display = "block";
+function displayElement(e) {
+  e.style.display = "block";
 }
 
-function hideElement(e){
+function hideElement(e) {
   e.style.display = "none";
 }
 
 document.addEventListener("mouseover", () => {
-  displayElement(menuColor)
-  displayElement(PLAYPAUSE_BUTTON)
-})
+  displayElement(menuColor);
+  displayElement(PLAY_PAUSE_BUTTON);
+});
 
 document.addEventListener("mouseout", () => {
-  hideElement(menuColor)
-  hideElement(PLAYPAUSE_BUTTON)
-})
+  hideElement(menuColor);
+  hideElement(PLAY_PAUSE_BUTTON);
+});

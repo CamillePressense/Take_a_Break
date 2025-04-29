@@ -50,6 +50,7 @@
 
 .containerTimer {
   position: relative;
+  gap: 20px;
 }
 
 .timer {
@@ -86,16 +87,16 @@
     opacity: 1;
   }
 }
-
 .playPause {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  display: none;
+  cursor: pointer;
 }
 
-.playPause img {
-  width: 40px;
-  height: auto;
+.pauseIcon,
+.playIcon {
+  width: 24px;
+  height: 24px;
 }
