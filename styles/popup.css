@@ -31,13 +31,13 @@ body {
 }
 
 input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button { 
-	-webkit-appearance: none;
-	margin:0;
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input {
-  width: 40px;
+  width: 20px;
 }
 
 .timeContainer button {
@@ -45,7 +45,7 @@ input {
   border: 1px;
   cursor: pointer;
   margin: 3px;
-} 
+}
 
 .timeContainer input {
   border: 0;
