@@ -43,16 +43,15 @@ document.addEventListener("DOMContentLoaded", function () {
 //send values to background and local storage on start button
 document.addEventListener("DOMContentLoaded", function () {
     const WORK_TIME = document.querySelector("#workTime");
-    const BREAK_TIME_INPUT = document.querySelector("#workTimeBreak");
-    
+    const BREAK_TIME_INPUT = document.querySelector("#workTimeBreak");   
     const START_BUTTON = document.querySelector("#start");
     
-    const startTimer = () => {
+    const openWindow = () => {
         let workTimeValue = Number(WORK_TIME.value);
         let breakTimeValue = Number(BREAK_TIME_INPUT.value);
 
         chrome.runtime.sendMessage({
-            action:"startTimer"
+            action:"openWindow"
         })          
         chrome.storage.local.set({workTime: workTimeValue}, function() {
             console.log("Durée travail enregistrée dans le local storage");
@@ -63,16 +62,20 @@ document.addEventListener("DOMContentLoaded", function () {
         window.close();
     }
     
-    START_BUTTON.addEventListener("click", startTimer)
+    START_BUTTON.addEventListener("click", openWindow);
+
     document.addEventListener("keydown", event =>{
-        if (event.key === "Enter")
-        startTimer()
-        });
+        if (event.key === "Enter"){
+            event.preventDefault();
+            console.log("Touche Entrée détectée!");
+            openWindow();
+        }
+    });
 })
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#start").addEventListener("click", () => {
-      // Send a message to the background to open a window
+      // Sending a message to the background to open a window
       chrome.runtime.sendMessage({ action: "openWindow" }, (response) => {
         if (response.status === "success") {
           console.log(
@@ -84,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     });
-  }); 
+}); 
 
 
 

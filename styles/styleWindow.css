@@ -19,6 +19,7 @@
 .colorChoice {
   cursor: pointer;
   margin-bottom: 4px;
+  display: none;
 }
 
 .containerHeader {
