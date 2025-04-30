@@ -11,6 +11,9 @@ const getPin = document.querySelector("#isPined");
 const pinDisabled = document.querySelector("#pinDisabled");
 const playButton = document.querySelector("#play");
 
+const alertSound = new Audio("/sounds/soundBreakTime.wav");
+alertSound.volume = 0.5;
+
 let alwaysOnTopEnabled = true;
 getPin.addEventListener("click", () => {
   alwaysOnTopEnabled = !alwaysOnTopEnabled;
@@ -121,7 +124,10 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Valeur recuperee work:", workTime);
       return workTime;
     } catch (error) {
-        console.error("Erreur lors de la récupération du temps de travail:", error);
+      console.error(
+        "Erreur lors de la récupération du temps de travail:",
+        error
+      );
     }
   }
 
@@ -133,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Valeur recuperee break:", breakTime);
       return breakTime;
     } catch (error) {
-        console.error("Erreur lors de la récupération du temps de pause:", error);
+      console.error("Erreur lors de la récupération du temps de pause:", error);
     }
   }
   //Lancer le décompte du temps de travail
@@ -141,23 +147,25 @@ document.addEventListener("DOMContentLoaded", function () {
   async function startTimer(timeWork) {
     currentWorkTime = timeWork;
     displayTimer();
+    TIMER.textContent = currentWorkTime;
     intervalId = setInterval(() => {
       if (currentWorkTime >= 0 && !isPaused) {
-        TIMER.textContent = currentWorkTime;
         currentWorkTime--;
+        TIMER.textContent = currentWorkTime;
       } else if (currentWorkTime < 0) {
         clearInterval(intervalId);
         breakStart();
       }
-    }, 1000);
+    }, 60000);
   }
 
   //Lancer le temps de pause
-  async function breakStart(){
+  async function breakStart() {
     TIMER.textContent = "";
     displayBreakLogo();
     const breakTime = await getBreakTime();
-    timeOutId = setTimeout(timer, breakTime * 1000);
+    alertSound.play();
+    timeOutId = setTimeout(timer, breakTime * 60000);
   }
 
   //Lancer le timer global
