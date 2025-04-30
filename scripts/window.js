@@ -149,12 +149,13 @@ document.addEventListener("DOMContentLoaded", function () {
     displayTimer();
     TIMER.textContent = currentWorkTime;
     intervalId = setInterval(() => {
-      if (currentWorkTime >= 0 && !isPaused) {
+      if (currentWorkTime > 0 && !isPaused) {
         currentWorkTime--;
         TIMER.textContent = currentWorkTime;
-      } else if (currentWorkTime < 0) {
-        clearInterval(intervalId);
-        breakStart();
+         if (currentWorkTime <= 0) {
+          clearInterval(intervalId);
+          breakStart();
+        }
       }
     }, 60000);
   }
