@@ -10,15 +10,20 @@ body {
   width: 250px;
   margin: 3px;
   border-radius: 17px;
-  background-color: white;
+  background-color: rgb(221, 217, 217);
   min-height: calc(100vh - 6px);
+}
+
+p {
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .Container {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .startButton {
@@ -27,6 +32,7 @@ body {
   margin-bottom: 10px;
   margin-top: 5px;
   border-radius: 25px;
+  font-weight: bold;
   border: 1px solid rgb(71, 69, 69);
 }
 

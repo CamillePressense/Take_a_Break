@@ -141,15 +141,17 @@ document.addEventListener("DOMContentLoaded", function () {
   async function startTimer(timeWork) {
     currentWorkTime = timeWork;
     displayTimer();
+    TIMER.textContent = currentWorkTime;
     intervalId = setInterval(() => {
-      if (currentWorkTime >= 0 && !isPaused) {
-        TIMER.textContent = currentWorkTime;
+      if (currentWorkTime > 0 && !isPaused) {
         currentWorkTime--;
-      } else if (currentWorkTime < 0) {
-        clearInterval(intervalId);
-        breakStart();
+        TIMER.textContent = currentWorkTime;
+         if (currentWorkTime <= 0) {
+          clearInterval(intervalId);
+          breakStart();
+        }
       }
-    }, 1000);
+    }, 60000);
   }
 
   //Lancer le temps de pause
@@ -157,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     TIMER.textContent = "";
     displayBreakLogo();
     const breakTime = await getBreakTime();
-    timeOutId = setTimeout(timer, breakTime * 1000);
+    timeOutId = setTimeout(timer, breakTime * 60000);
   }
 
   //Lancer le timer global
