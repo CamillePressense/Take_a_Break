@@ -14,6 +14,9 @@ const playButton = document.querySelector("#play");
 const alertSound = new Audio("/sounds/soundBreakTime.wav");
 alertSound.volume = 0.5;
 
+const timerStartSound = new Audio("/sounds/soundStartTimer.mp3");
+timerStartSound.volume = 0.5;
+
 let alwaysOnTopEnabled = true;
 getPin.addEventListener("click", () => {
   alwaysOnTopEnabled = !alwaysOnTopEnabled;
@@ -147,12 +150,13 @@ document.addEventListener("DOMContentLoaded", function () {
   async function startTimer(timeWork) {
     currentWorkTime = timeWork;
     displayTimer();
+    timerStartSound.play();
     TIMER.textContent = currentWorkTime;
     intervalId = setInterval(() => {
       if (currentWorkTime > 0 && !isPaused) {
         currentWorkTime--;
         TIMER.textContent = currentWorkTime;
-         if (currentWorkTime <= 0) {
+        if (currentWorkTime <= 0) {
           clearInterval(intervalId);
           breakStart();
         }
