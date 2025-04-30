@@ -10,6 +10,7 @@ const blueColor = document.querySelector("#blue");
 const getPin = document.querySelector("#isPined");
 const pinDisabled = document.querySelector("#pinDisabled");
 const playButton = document.querySelector("#play");
+const circle = document.querySelector("#circle");
 
 const alertSound = new Audio("/sounds/soundBreakTime.wav");
 alertSound.volume = 0.5;
@@ -69,26 +70,31 @@ menuColor.addEventListener("click", () => {
 
 yellowColor.addEventListener("click", () => {
   body.style.backgroundColor = "#ffffba";
+  circle.style.backgroundColor = "#ececa3";
   showElement();
 });
 
 orangeColor.addEventListener("click", () => {
   body.style.backgroundColor = "#ffdfba";
+  circle.style.backgroundColor = "#eed0ad";
   showElement();
 });
 
 redColor.addEventListener("click", () => {
   body.style.backgroundColor = "#ffb3ba";
+  circle.style.backgroundColor = "#e9a4aa";
   showElement();
 });
 
 greenColor.addEventListener("click", () => {
   body.style.backgroundColor = "#baffc9";
+  circle.style.backgroundColor = "#a8e5b5";
   showElement();
 });
 
 blueColor.addEventListener("click", () => {
   body.style.backgroundColor = "#bae1ff";
+  circle.style.backgroundColor = "#afd1ec";
   showElement();
 });
 
