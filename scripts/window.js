@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
     menuColor.style.display = "block";
   }
 
-  // On récupère le temps de travail du local storage
+  // Getting working time from chrome local storage
   async function getWorkTime() {
     try {
       const result = await chrome.storage.local.get("workTime");
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //On récupère le temps de pause
+  //Getting breaking time from chrome local storage
   async function getBreakTime() {
     try {
       const result = await chrome.storage.local.get("breakTime");
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Erreur lors de la récupération du temps de pause:", error);
     }
   }
-  //Lancer le décompte du temps de travail
+ 
   let currentWorkTime;
   async function startTimer(timeWork) {
     currentWorkTime = timeWork;
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 60000);
   }
 
-  //Lancer le temps de pause
+  
   async function breakStart() {
     TIMER.textContent = "";
     displayBreakLogo();
@@ -179,7 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
     timeOutId = setTimeout(timer, breakTime * 60000);
   }
 
-  //Lancer le timer global
   async function timer() {
     if (timeOutId) {
       clearTimeout(timeOutId);
